@@ -23,16 +23,13 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-// Valid warehouse sizes as per Snowflake documentation
+// Valid warehouse sizes as per Snowflake documentation (limited to cost-effective sizes)
 const VALID_WAREHOUSE_SIZES = [
-  'X-SMALL', 'XSMALL', 'SMALL', 'MEDIUM', 'LARGE',
-  'X-LARGE', 'XLARGE', '2X-LARGE', 'XXLARGE', 'X2LARGE',
-  '3X-LARGE', 'XXXLARGE', 'X3LARGE', '4X-LARGE', 'X4LARGE',
-  '5X-LARGE', 'X5LARGE', '6X-LARGE', 'X6LARGE'
+  'X-SMALL', 'XSMALL', 'SMALL', 'MEDIUM', 'LARGE'
 ];
 
-// Valid warehouse types
-const VALID_WAREHOUSE_TYPES = ['STANDARD', 'SNOWPARK-OPTIMIZED'];
+// Valid warehouse types (limited to cost-effective types)
+const VALID_WAREHOUSE_TYPES = ['STANDARD'];
 
 // Valid scaling policies
 const VALID_SCALING_POLICIES = ['STANDARD', 'ECONOMY'];
@@ -104,15 +101,20 @@ function createTestTerraformConfig(config) {
     delete configForJson.comment;
   }
 
+  // Use map format with warehouse key
+  const warehouseConfigs = {
+    test_wh: configForJson
+  };
+
   const mainTf = `
 terraform {
   required_version = ">= 1.3.0"
 }
 
-module "warehouse" {
+module "warehouses" {
   source = "${moduleDir.replace(/\\/g, '/')}"
 
-  warehouse_config = ${JSON.stringify(configForJson, null, 2)}
+  warehouse_configs = ${JSON.stringify(warehouseConfigs, null, 2)}
 }
 `;
 

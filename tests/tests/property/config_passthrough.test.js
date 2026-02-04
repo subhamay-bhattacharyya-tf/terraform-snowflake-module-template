@@ -18,16 +18,13 @@ const fc = require('fast-check');
 const fs = require('fs');
 const path = require('path');
 
-// Valid warehouse sizes as per Snowflake documentation
+// Valid warehouse sizes as per Snowflake documentation (limited to cost-effective sizes)
 const VALID_WAREHOUSE_SIZES = [
-  'X-SMALL', 'XSMALL', 'SMALL', 'MEDIUM', 'LARGE',
-  'X-LARGE', 'XLARGE', '2X-LARGE', 'XXLARGE', 'X2LARGE',
-  '3X-LARGE', 'XXXLARGE', 'X3LARGE', '4X-LARGE', 'X4LARGE',
-  '5X-LARGE', 'X5LARGE', '6X-LARGE', 'X6LARGE'
+  'X-SMALL', 'XSMALL', 'SMALL', 'MEDIUM', 'LARGE'
 ];
 
-// Valid warehouse types
-const VALID_WAREHOUSE_TYPES = ['STANDARD', 'SNOWPARK-OPTIMIZED'];
+// Valid warehouse types (limited to cost-effective types)
+const VALID_WAREHOUSE_TYPES = ['STANDARD'];
 
 // Valid scaling policies
 const VALID_SCALING_POLICIES = ['STANDARD', 'ECONOMY'];
@@ -111,8 +108,8 @@ function verifyModulePassthrough() {
   const missingMappings = [];
 
   for (const prop of CONFIG_PROPERTIES) {
-    // Check that each property is mapped from var.warehouse_config to the resource
-    const pattern = new RegExp(`${prop}\\s*=\\s*var\\.warehouse_config\\.${prop}`, 'i');
+    // Check that each property is mapped from each.value to the resource (map-based)
+    const pattern = new RegExp(`${prop}\\s*=\\s*each\\.value\\.${prop}`, 'i');
     if (!pattern.test(mainTfContent)) {
       missingMappings.push(prop);
     }
@@ -136,7 +133,7 @@ function verifyVariableDefinitions() {
   const missingProperties = [];
 
   for (const prop of CONFIG_PROPERTIES) {
-    // Check that each property is defined in the warehouse_config object type
+    // Check that each property is defined in the warehouse_configs object type
     const pattern = new RegExp(`${prop}\\s*=`, 'i');
     if (!pattern.test(variablesTfContent)) {
       missingProperties.push(prop);

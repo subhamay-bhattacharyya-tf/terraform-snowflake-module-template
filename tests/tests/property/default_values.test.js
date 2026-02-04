@@ -56,15 +56,20 @@ function createTestTerraformConfig(config) {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'terraform-test-'));
   const moduleDir = path.resolve(__dirname, '../../../modules/snowflake-warehouse');
 
+  // Use map format with warehouse key
+  const warehouseConfigs = {
+    test_wh: config
+  };
+
   const mainTf = `
 terraform {
   required_version = ">= 1.3.0"
 }
 
-module "warehouse" {
+module "warehouses" {
   source = "${moduleDir.replace(/\\/g, '/')}"
 
-  warehouse_config = ${JSON.stringify(config, null, 2)}
+  warehouse_configs = ${JSON.stringify(warehouseConfigs, null, 2)}
 }
 `;
 
