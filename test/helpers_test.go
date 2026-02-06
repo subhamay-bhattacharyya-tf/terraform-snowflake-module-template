@@ -2,13 +2,16 @@
 package test
 
 import (
+	"crypto/rsa"
+	"crypto/x509"
 	"database/sql"
+	"encoding/pem"
 	"fmt"
 	"os"
 	"strings"
 	"testing"
 
-	_ "github.com/snowflakedb/gosnowflake"
+	"github.com/snowflakedb/gosnowflake"
 	"github.com/stretchr/testify/require"
 )
 
@@ -24,40 +27,43 @@ func openSnowflake(t *testing.T) *sql.DB {
 	orgName := mustEnv(t, "SNOWFLAKE_ORGANIZATION_NAME")
 	accountName := mustEnv(t, "SNOWFLAKE_ACCOUNT_NAME")
 	user := mustEnv(t, "SNOWFLAKE_USER")
-	privateKey := mustEnv(t, "SNOWFLAKE_PRIVATE_KEY")
-
+	privateKeyPEM := mustEnv(t, "SNOWFLAKE_PRIVATE_KEY")
 	role := os.Getenv("SNOWFLAKE_ROLE")
-	wh := os.Getenv("SNOWFLAKE_WAREHOUSE")
-	dbName := os.Getenv("SNOWFLAKE_DATABASE")
-	schema := os.Getenv("SNOWFLAKE_SCHEMA")
+
+	// Parse the private key
+	block, _ := pem.Decode([]byte(privateKeyPEM))
+	require.NotNil(t, block, "Failed to decode PEM block from private key")
+
+	var privateKey *rsa.PrivateKey
+	var err error
+
+	// Try PKCS8 first, then PKCS1
+	key, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		privateKey, err = x509.ParsePKCS1PrivateKey(block.Bytes)
+		require.NoError(t, err, "Failed to parse private key")
+	} else {
+		var ok bool
+		privateKey, ok = key.(*rsa.PrivateKey)
+		require.True(t, ok, "Private key is not RSA")
+	}
 
 	// Build account identifier: orgname-accountname
 	account := fmt.Sprintf("%s-%s", orgName, accountName)
 
-	// Build DSN with key-pair authentication
-	// Format: user@account/db/schema?authenticator=SNOWFLAKE_JWT&privateKey=...
-	base := fmt.Sprintf("%s@%s", user, account)
-
-	path := ""
-	if dbName != "" {
-		path = "/" + dbName
-		if schema != "" {
-			path += "/" + schema
-		}
+	config := gosnowflake.Config{
+		Account:       account,
+		User:          user,
+		Authenticator: gosnowflake.AuthTypeJwt,
+		PrivateKey:    privateKey,
 	}
 
-	qs := []string{
-		"authenticator=SNOWFLAKE_JWT",
-		"privateKey=" + urlEncode(privateKey),
-	}
 	if role != "" {
-		qs = append(qs, "role="+urlEncode(role))
-	}
-	if wh != "" {
-		qs = append(qs, "warehouse="+urlEncode(wh))
+		config.Role = role
 	}
 
-	dsn := base + path + "?" + strings.Join(qs, "&")
+	dsn, err := gosnowflake.DSN(&config)
+	require.NoError(t, err, "Failed to build DSN")
 
 	db, err := sql.Open("snowflake", dsn)
 	require.NoError(t, err)
@@ -115,14 +121,4 @@ func mustEnv(t *testing.T, key string) string {
 
 func escapeLike(s string) string {
 	return strings.ReplaceAll(s, "'", "''")
-}
-
-func urlEncode(s string) string {
-	r := strings.NewReplacer(
-		" ", "%20",
-		"&", "%26",
-		"=", "%3D",
-		"+", "%2B",
-	)
-	return r.Replace(s)
 }
