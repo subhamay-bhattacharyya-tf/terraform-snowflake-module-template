@@ -22,6 +22,6 @@ provider "snowflake" {
   account_name      = var.snowflake_account_name
   user              = var.snowflake_user
   role              = var.snowflake_role
-  authenticator     = "JWT"
+  authenticator     = "SNOWFLAKE_JWT"
   private_key       = var.snowflake_private_key
 }
