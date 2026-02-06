@@ -5,6 +5,7 @@
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
 
 ### 🎨 Styling
 
@@ -16,6 +17,7 @@
 - *(github-actions)* Migrate authentication to key-pair and remove property tests
 - *(github-actions)* Enhance Terratest output visibility and remove conditional gate
 - *(test)* Update Go dependencies and add go.sum
+- *(testing)* Migrate to key-pair authentication and add go mod tidy
 ## [1.0.0] - 2026-02-04
 
 ### 🚀 Features
