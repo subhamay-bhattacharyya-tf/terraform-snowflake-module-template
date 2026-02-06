@@ -195,6 +195,18 @@ Required environment variables for testing:
 
 ## CI/CD Configuration
 
+The CI workflow runs on:
+- Push to `main`, `feature/**`, and `bug/**` branches (when `modules/**` changes)
+- Pull requests to `main` (when `modules/**` changes)
+- Manual workflow dispatch
+
+The workflow includes:
+- Terraform validation and format checking
+- Examples validation
+- Terratest integration tests (output displayed in GitHub Step Summary)
+- Changelog generation (non-main branches)
+- Semantic release (main branch only)
+
 The CI workflow uses the following GitHub organization variables:
 
 | Variable | Description | Default |

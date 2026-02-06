@@ -90,7 +90,6 @@ jobs:
     name: Terratest
     runs-on: ubuntu-latest
     needs: examples-validate
-    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
     env:
       TF_VERSION: ${{ vars.TERRAFORM_VERSION || '1.3.0' }}
       GO_VERSION: ${{ vars.GO_VERSION || '1.21' }}
@@ -115,7 +114,13 @@ jobs:
         working-directory: test
 
       - name: Run Terratest - Single Warehouse
-        run: go test -v -timeout 30m -run TestSingleWarehouse
+        id: single-warehouse-test
+        run: |
+          go test -v -timeout 30m -run TestSingleWarehouse 2>&1 | tee single_warehouse_output.txt
+          echo "## Single Warehouse Test Results" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat single_warehouse_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
         working-directory: test
         env:
           SNOWFLAKE_ORGANIZATION_NAME: ${{ vars.SNOWFLAKE_ORGANIZATION_NAME }}
@@ -125,7 +130,13 @@ jobs:
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
 
       - name: Run Terratest - Multiple Warehouses
-        run: go test -v -timeout 30m -run TestMultipleWarehouses
+        id: multiple-warehouses-test
+        run: |
+          go test -v -timeout 30m -run TestMultipleWarehouses 2>&1 | tee multiple_warehouses_output.txt
+          echo "## Multiple Warehouses Test Results" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat multiple_warehouses_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
         working-directory: test
         env:
           SNOWFLAKE_ORGANIZATION_NAME: ${{ vars.SNOWFLAKE_ORGANIZATION_NAME }}
