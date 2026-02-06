@@ -1,14 +1,37 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-## 1.0.0 (2026-02-04)
-
-### Features
-
-* **snowflake-warehouse:** support multiple warehouses via map configuration ([fc62535](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/commit/fc62535a424e12f43a9a8ece9cb7181952f3cbf4))
-
 ## [unreleased]
+
+### 🐛 Bug Fixes
+
+- *(snowflake)* Update JWT authenticator to SNOWFLAKE_JWT and remove extra blank line
+
+### 🚜 Refactor
+
+- *(test)* Migrate to gosnowflake config builder for JWT authentication
+- *(test)* Improve warehouse property fetching and remove extra blank line
+
+### 📚 Documentation
+
+- Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
+
+### 🎨 Styling
+
+- *(snowflake-warehouse)* Add blank line after module header comment
+
+### ⚙️ Miscellaneous Tasks
+
+- *(testing)* Migrate from Jest to Terratest and restructure examples
+- *(github-actions)* Migrate authentication to key-pair and remove property tests
+- *(github-actions)* Enhance Terratest output visibility and remove conditional gate
+- *(test)* Update Go dependencies and add go.sum
+- *(testing)* Migrate to key-pair authentication and add go mod tidy
+- *(github-actions)* Add pipefail option to Terratest commands and update Snowflake provider source
+## [1.0.0] - 2026-02-04
 
 ### 🚀 Features
 
@@ -21,6 +44,7 @@ All notable changes to this project will be documented in this file.
 ### 📚 Documentation
 
 - *(readme)* Update badges to reflect Snowflake focus
+- Update CHANGELOG.md [skip ci]
 
 ### 🎨 Styling
 
@@ -29,3 +53,4 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - *(github-actions)* Add permissions and token for changelog generation
+- *(release)* Version 1.0.0 [skip ci]
