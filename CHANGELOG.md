@@ -4,8 +4,13 @@
 
 - *(snowflake)* Update JWT authenticator to SNOWFLAKE_JWT and remove extra blank line
 
+### 🚜 Refactor
+
+- *(test)* Migrate to gosnowflake config builder for JWT authentication
+
 ### 📚 Documentation
 
+- Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
