@@ -1,7 +1,12 @@
 ## [unreleased]
 
+### 🐛 Bug Fixes
+
+- *(snowflake)* Update JWT authenticator to SNOWFLAKE_JWT and remove extra blank line
+
 ### 📚 Documentation
 
+- Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
@@ -18,6 +23,7 @@
 - *(github-actions)* Enhance Terratest output visibility and remove conditional gate
 - *(test)* Update Go dependencies and add go.sum
 - *(testing)* Migrate to key-pair authentication and add go mod tidy
+- *(github-actions)* Add pipefail option to Terratest commands and update Snowflake provider source
 ## [1.0.0] - 2026-02-04
 
 ### 🚀 Features
