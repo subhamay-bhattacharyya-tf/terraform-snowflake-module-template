@@ -110,7 +110,9 @@ jobs:
           cache-dependency-path: test/go.sum
 
       - name: Download Go Dependencies
-        run: go mod download
+        run: |
+          go mod tidy
+          go mod download
         working-directory: test
 
       - name: Run Terratest - Single Warehouse

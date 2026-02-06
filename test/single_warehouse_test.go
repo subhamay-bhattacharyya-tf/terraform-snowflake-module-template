@@ -3,6 +3,7 @@ package test
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -42,7 +43,12 @@ func TestSingleWarehouse(t *testing.T) {
 		TerraformDir: tfDir,
 		NoColor:      true,
 		Vars: map[string]interface{}{
-			"warehouse_configs": warehouseConfigs,
+			"warehouse_configs":           warehouseConfigs,
+			"snowflake_organization_name": os.Getenv("SNOWFLAKE_ORGANIZATION_NAME"),
+			"snowflake_account_name":      os.Getenv("SNOWFLAKE_ACCOUNT_NAME"),
+			"snowflake_user":              os.Getenv("SNOWFLAKE_USER"),
+			"snowflake_role":              os.Getenv("SNOWFLAKE_ROLE"),
+			"snowflake_private_key":       os.Getenv("SNOWFLAKE_PRIVATE_KEY"),
 		},
 	}
 

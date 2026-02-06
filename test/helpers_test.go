@@ -21,16 +21,22 @@ type WarehouseProps struct {
 func openSnowflake(t *testing.T) *sql.DB {
 	t.Helper()
 
-	account := mustEnv(t, "SNOWFLAKE_ACCOUNT")
+	orgName := mustEnv(t, "SNOWFLAKE_ORGANIZATION_NAME")
+	accountName := mustEnv(t, "SNOWFLAKE_ACCOUNT_NAME")
 	user := mustEnv(t, "SNOWFLAKE_USER")
-	pass := mustEnv(t, "SNOWFLAKE_PASSWORD")
+	privateKey := mustEnv(t, "SNOWFLAKE_PRIVATE_KEY")
 
 	role := os.Getenv("SNOWFLAKE_ROLE")
 	wh := os.Getenv("SNOWFLAKE_WAREHOUSE")
 	dbName := os.Getenv("SNOWFLAKE_DATABASE")
 	schema := os.Getenv("SNOWFLAKE_SCHEMA")
 
-	base := fmt.Sprintf("%s:%s@%s", user, pass, account)
+	// Build account identifier: orgname-accountname
+	account := fmt.Sprintf("%s-%s", orgName, accountName)
+
+	// Build DSN with key-pair authentication
+	// Format: user@account/db/schema?authenticator=SNOWFLAKE_JWT&privateKey=...
+	base := fmt.Sprintf("%s@%s", user, account)
 
 	path := ""
 	if dbName != "" {
@@ -40,7 +46,10 @@ func openSnowflake(t *testing.T) *sql.DB {
 		}
 	}
 
-	qs := []string{}
+	qs := []string{
+		"authenticator=SNOWFLAKE_JWT",
+		"privateKey=" + urlEncode(privateKey),
+	}
 	if role != "" {
 		qs = append(qs, "role="+urlEncode(role))
 	}
@@ -48,10 +57,7 @@ func openSnowflake(t *testing.T) *sql.DB {
 		qs = append(qs, "warehouse="+urlEncode(wh))
 	}
 
-	dsn := base + path
-	if len(qs) > 0 {
-		dsn += "?" + strings.Join(qs, "&")
-	}
+	dsn := base + path + "?" + strings.Join(qs, "&")
 
 	db, err := sql.Open("snowflake", dsn)
 	require.NoError(t, err)

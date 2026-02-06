@@ -9,19 +9,19 @@ terraform {
   }
 }
 
-# Provider configuration placeholder
-# Configure authentication using environment variables or a provider block:
-#
-# Option 1: Environment variables (recommended)
-#   export SNOWFLAKE_ACCOUNT="your_account"
-#   export SNOWFLAKE_USER="your_user"
-#   export SNOWFLAKE_PASSWORD="your_password"
-#   export SNOWFLAKE_ROLE="your_role"
-#
-# Option 2: Provider block (not recommended for production)
-# provider "snowflake" {
-#   account  = "your_account"
-#   user     = "your_user"
-#   password = "your_password"
-#   role     = "your_role"
-# }
+# Provider configuration using key-pair authentication
+# Required environment variables:
+#   SNOWFLAKE_ORGANIZATION_NAME - Snowflake organization name
+#   SNOWFLAKE_ACCOUNT_NAME      - Snowflake account name
+#   SNOWFLAKE_USER              - Snowflake username
+#   SNOWFLAKE_ROLE              - Snowflake role
+#   SNOWFLAKE_PRIVATE_KEY       - Snowflake private key (PEM format)
+
+provider "snowflake" {
+  organization_name = var.snowflake_organization_name
+  account_name      = var.snowflake_account_name
+  user              = var.snowflake_user
+  role              = var.snowflake_role
+  authenticator     = "JWT"
+  private_key       = var.snowflake_private_key
+}
