@@ -187,29 +187,30 @@ go test -v -timeout 30m
 ```
 
 Required environment variables for testing:
-- `SNOWFLAKE_ACCOUNT` - Snowflake account identifier (e.g., "xy12345.us-east-1")
+- `SNOWFLAKE_ORGANIZATION_NAME` - Snowflake organization name
+- `SNOWFLAKE_ACCOUNT_NAME` - Snowflake account name
 - `SNOWFLAKE_USER` - Snowflake username
-- `SNOWFLAKE_PASSWORD` - Snowflake password
-- `SNOWFLAKE_ROLE` (optional) - Snowflake role (e.g., "SYSADMIN")
+- `SNOWFLAKE_ROLE` - Snowflake role (e.g., "SYSADMIN")
+- `SNOWFLAKE_PRIVATE_KEY` - Snowflake private key for key-pair authentication
 
 ## CI/CD Configuration
 
-The CI workflow uses the following GitHub organization variables (with defaults):
+The CI workflow uses the following GitHub organization variables:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `TERRAFORM_VERSION` | Terraform version for CI jobs | `1.3.0` |
 | `GO_VERSION` | Go version for Terratest | `1.21` |
-| `GIT_CHECKOUT_VERSION` | GitHub checkout action version | `v6` |
+| `SNOWFLAKE_ORGANIZATION_NAME` | Snowflake organization name | - |
+| `SNOWFLAKE_ACCOUNT_NAME` | Snowflake account name | - |
+| `SNOWFLAKE_USER` | Snowflake username | - |
+| `SNOWFLAKE_ROLE` | Snowflake role (e.g., SYSADMIN) | - |
 
 The following GitHub secrets are required for Terratest integration tests:
 
 | Secret | Description | Required |
 |--------|-------------|----------|
-| `SNOWFLAKE_ACCOUNT` | Snowflake account identifier | Yes |
-| `SNOWFLAKE_USER` | Snowflake username | Yes |
-| `SNOWFLAKE_PASSWORD` | Snowflake password | Yes |
-| `SNOWFLAKE_ROLE` | Snowflake role | No |
+| `SNOWFLAKE_PRIVATE_KEY` | Snowflake private key for key-pair authentication | Yes |
 
 ## License
 
