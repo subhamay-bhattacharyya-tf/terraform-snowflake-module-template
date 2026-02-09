@@ -10,6 +10,8 @@
 ### 🐛 Bug Fixes
 
 - *(snowflake)* Update JWT authenticator to SNOWFLAKE_JWT and remove extra blank line
+- *(release)* Force patch release
+- *(release)* Trigger semantic release
 
 ### 🚜 Refactor
 
@@ -20,6 +22,7 @@
 ### 📚 Documentation
 
 - *(readme)* Update badges to reflect Snowflake focus
+- Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
