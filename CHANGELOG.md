@@ -34,11 +34,13 @@
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
+- Update CHANGELOG.md [skip ci]
 
 ### 🎨 Styling
 
 - *(snowflake-warehouse)* Add periods to output descriptions
 - *(snowflake-warehouse)* Add blank line after module header comment
+- *(main.tf)* Remove extra blank line for consistency
 
 ### ⚙️ Miscellaneous Tasks
 
