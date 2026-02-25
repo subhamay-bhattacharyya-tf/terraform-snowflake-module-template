@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Module Template - Variables
+# -----------------------------------------------------------------------------
+# This file defines the input variables for the module.
+# -----------------------------------------------------------------------------
+
 variable "warehouse_configs" {
   description = "Map of configuration objects for Snowflake warehouses"
   type = map(object({

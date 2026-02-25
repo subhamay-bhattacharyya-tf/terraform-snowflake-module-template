@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Module Template - Outputs
+# -----------------------------------------------------------------------------
+# This file defines the output values for the module.
+# -----------------------------------------------------------------------------
+
 output "warehouse_names" {
   description = "The names of the created warehouses."
   value       = { for k, v in snowflake_warehouse.this : k => v.name }

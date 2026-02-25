@@ -1,10 +1,12 @@
-# Example: Multiple Snowflake Warehouses
-#
-# This example demonstrates how to use the snowflake-warehouse module
-# to create multiple Snowflake warehouses using a map of configurations.
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Module Template - Multiple Warehouses Example Main
+# -----------------------------------------------------------------------------
+# This example demonstrates how to create multiple Snowflake warehouses using
+# a map of configurations.
+# -----------------------------------------------------------------------------
 
 module "warehouses" {
-  source = "../../modules/snowflake-warehouse"
+  source = "../.."
 
   warehouse_configs = var.warehouse_configs
 }
