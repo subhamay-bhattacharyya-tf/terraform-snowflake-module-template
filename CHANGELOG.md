@@ -6,6 +6,7 @@
 - Clean up legacy configurations and update CI workflows
 - [**breaking**] Add blank line for improved readability in main.tf
 - Update CI workflow to use snowflake-warehouse module and clean up main.tf
+- [**breaking**] Convert to single-module repository layout
 
 ### 🐛 Bug Fixes
 
@@ -22,6 +23,7 @@
 ### 📚 Documentation
 
 - *(readme)* Update badges to reflect Snowflake focus
+- Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
 - Update CHANGELOG.md [skip ci]
