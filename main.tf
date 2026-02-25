@@ -5,7 +5,6 @@
 # warehouse_configs map.
 # -----------------------------------------------------------------------------
 
-
 resource "snowflake_warehouse" "this" {
   for_each = var.warehouse_configs
 
