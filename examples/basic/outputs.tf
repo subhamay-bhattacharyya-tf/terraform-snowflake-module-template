@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Module Template - Basic Example Outputs
+# -----------------------------------------------------------------------------
+# This file defines the output values for the basic example.
+# -----------------------------------------------------------------------------
+
 output "warehouse_names" {
   description = "The names of the created warehouses"
   value       = module.warehouse.warehouse_names

@@ -1,9 +1,16 @@
+# -----------------------------------------------------------------------------
+# Terraform Snowflake Module Template - Basic Example Versions
+# -----------------------------------------------------------------------------
+# This file specifies the required Terraform version and provider versions
+# for the basic example.
+# -----------------------------------------------------------------------------
+
 terraform {
   required_version = ">= 1.3.0"
 
   required_providers {
     snowflake = {
-      source  = "Snowflake-Labs/snowflake"
+      source  = "snowflakedb/snowflake"
       version = ">= 0.87.0"
     }
   }

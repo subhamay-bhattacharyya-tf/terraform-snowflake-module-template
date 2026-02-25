@@ -6,7 +6,7 @@ This example demonstrates how to create a single Snowflake warehouse using the m
 
 ```hcl
 module "warehouse" {
-  source = "../../modules/snowflake-warehouse"
+  source = "../.."
 
   warehouse_configs = {
     "my_warehouse" = {

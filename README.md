@@ -1,6 +1,6 @@
 # Terraform Snowflake Module - Warehouse
 
-![Release](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse/actions/workflows/ci.yaml/badge.svg)&nbsp;![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?logo=snowflake&logoColor=white)&nbsp;![Commit Activity](https://img.shields.io/github/commit-activity/t/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Last Commit](https://img.shields.io/github/last-commit/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Release Date](https://img.shields.io/github/release-date/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Repo Size](https://img.shields.io/github/repo-size/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![File Count](https://img.shields.io/github/directory-file-count/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Issues](https://img.shields.io/github/issues/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Top Language](https://img.shields.io/github/languages/top/subhamay-bhattacharyya-tf/terraform-snowflake-warehouse)&nbsp;![Custom Endpoint](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/bsubhamay/73bb06aedb3721ff9a98cfe96f71647a/raw/terraform-snowflake-warehouse.json?)
+![Release](https://github.com/subhamay-bhattacharyya-tf/terraform-snowflake-module-template/actions/workflows/ci.yaml/badge.svg)&nbsp;![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?logo=snowflake&logoColor=white)&nbsp;![Commit Activity](https://img.shields.io/github/commit-activity/t/subhamay-bhattacharyya-tf/terraform-snowflake-module-template)&nbsp;![Last Commit](https://img.shields.io/github/last-commit/subhamay-bhattacharyya-tf/terraform-snowflake-module-template)&nbsp;![Release Date](https://img.shields.io/github/release-date/subhamay-bhattacharyya-tf/terraform-snowflake-module-template)&nbsp;![Repo Size](https://img.shields.io/github/repo-size/subhamay-bhattacharyya-tf/terraform-snowflake-module-template)&nbsp;![File Count](https://img.shields.io/github/directory-file-count/subhamay-bhattacharyya-tf/terraform-snowflake-module-template)&nbsp;![Issues](https://img.shields.io/github/issues/subhamay-bhattacharyya-tf/terraform-snowflake-module-template)&nbsp;![Top Language](https://img.shields.io/github/languages/top/subhamay-bhattacharyya-tf/terraform-snowflake-module-template)&nbsp;![Custom Endpoint](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/bsubhamay/e69b8c605f94271ea3441aabb7e8820b/raw/terraform-snowflake-module-template.json?)
 
 A Terraform module for creating and managing Snowflake warehouses using a map of configuration objects. Supports creating single or multiple warehouses with a single module call.
 
@@ -18,7 +18,7 @@ A Terraform module for creating and managing Snowflake warehouses using a map of
 
 ```hcl
 module "warehouse" {
-  source = "path/to/modules/snowflake-warehouse"
+  source = "github.com/subhamay-bhattacharyya-tf/terraform-snowflake-module-template"
 
   warehouse_configs = {
     "my_warehouse" = {
@@ -86,7 +86,7 @@ locals {
 }
 
 module "warehouses" {
-  source = "path/to/modules/snowflake-warehouse"
+  source = "github.com/subhamay-bhattacharyya-tf/terraform-snowflake-module-template"
 
   warehouse_configs = local.warehouses
 }
@@ -106,9 +106,9 @@ module "warehouses" {
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| snowflake | >= 0.87.0 |
+| Name | Source | Version |
+|------|--------|---------|
+| snowflake | snowflakedb/snowflake | >= 0.87.0 |
 
 ## Inputs
 
@@ -196,8 +196,8 @@ Required environment variables for testing:
 ## CI/CD Configuration
 
 The CI workflow runs on:
-- Push to `main`, `feature/**`, and `bug/**` branches (when `modules/**` changes)
-- Pull requests to `main` (when `modules/**` changes)
+- Push to `main`, `feature/**`, and `bug/**` branches (when `*.tf`, `examples/**`, or `test/**` changes)
+- Pull requests to `main` (when `*.tf`, `examples/**`, or `test/**` changes)
 - Manual workflow dispatch
 
 The workflow includes:
